@@ -47,12 +47,13 @@ function base64EncodeAudio(float32Array: Float32Array) {
   const chunkSize = 0x8000; // 32KB chunk size
   for (let i = 0; i < bytes.length; i += chunkSize) {
     let chunk = bytes.subarray(i, i + chunkSize);
+    // @ts-expect-error
     binary += String.fromCharCode.apply(null, chunk);
   }
   return btoa(binary);
 }
 // Helper function to flatten the audio data array
-function flattenAudioData(audioDataChunks) {
+function flattenAudioData(audioDataChunks: Float32Array[]) {
   // Calculate the total length of the combined audio data
   const totalLength = audioDataChunks.reduce((total, chunk) => total + chunk.length, 0);
 
@@ -68,10 +69,9 @@ function flattenAudioData(audioDataChunks) {
   return result;
 }
 
-export { playAudioFromInt16Array, base64EncodeAudio, floatTo16BitPCM, convertToFloat32, flattenAudioData };
 
 // Utility to play the recorded audio from Float32Array
-function playAudioBuffer(float32Array) {
+function playAudioBuffer(float32Array: Float32Array) {
   const playContext = new AudioContext(); // New context for playback
   const sampleRate = playContext.sampleRate;
 
@@ -96,7 +96,7 @@ function playAudioBuffer(float32Array) {
   console.log('Playback started');
 }
 // Helper function to decode Base64 to Uint8Array
-function base64DecodeAudio(base64String) {
+function base64DecodeAudio(base64String: string) {
   const binaryString = atob(base64String);
   const len = binaryString.length;
   const bytes = new Uint8Array(len);
@@ -109,7 +109,7 @@ function base64DecodeAudio(base64String) {
 }
 
 // Convert PCM 16-bit back to Float32Array
-function PCM16ToFloat32Array(uint8Array) {
+function PCM16ToFloat32Array(uint8Array: Uint8Array) {
   const float32Array = new Float32Array(uint8Array.length / 2);
   const dataView = new DataView(uint8Array.buffer);
 
@@ -122,7 +122,8 @@ function PCM16ToFloat32Array(uint8Array) {
 }
 
 // Play the decoded Float32Array as audio using the Web Audio API
-function playDecodedAudio(float32Array) {
+function playDecodedAudio(float32Array: Float32Array) {
+  // @ts-expect-error
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
   // Create an AudioBuffer for 1 channel (mono) audio
@@ -141,8 +142,10 @@ function playDecodedAudio(float32Array) {
 }
 
 // Example usage: decode, convert and play
-function decodeAndPlay(base64Audio) {
+function decodeAndPlay(base64Audio: string) {
   const uint8Array = base64DecodeAudio(base64Audio);
   const float32Array = PCM16ToFloat32Array(uint8Array);
   playDecodedAudio(float32Array);
 }
+
+export { playAudioFromInt16Array, base64EncodeAudio, floatTo16BitPCM, convertToFloat32, flattenAudioData, playAudioBuffer, base64DecodeAudio, PCM16ToFloat32Array, playDecodedAudio, decodeAndPlay };

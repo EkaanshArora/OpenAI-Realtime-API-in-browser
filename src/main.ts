@@ -31,7 +31,7 @@ initButton.addEventListener('click', async () => {
   });
 
   client.on('conversation.updated', (event: any) => {
-    const { item, delta } = event;
+    const { item } = event;
     console.log(item);
     if (item.status === 'completed') {
       console.log(item);
@@ -44,7 +44,7 @@ initButton.addEventListener('click', async () => {
   });
   await client.connect();
 
-  const zoomClient = ZoomVideoSDK.createClient();
+  // const zoomClient = ZoomVideoSDK.createClient();
   const micTrack = ZoomVideoSDK.createLocalAudioTrack();
   await micTrack.start();
 
