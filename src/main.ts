@@ -1,4 +1,4 @@
-import { RealtimeClient } from '@openai/realtime-api-beta';
+import { RealtimeClient } from '../openai-realtime-api-beta';
 import { base64EncodeAudio, flattenAudioData, playAudioFromInt16Array } from './utils';
 import ZoomVideoSDK from '@zoom/videosdk';
 import './style.css';
