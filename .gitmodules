@@ -1,0 +1,3 @@
+[submodule "openai-realtime-api-beta"]
+	path = openai-realtime-api-beta
+	url = https://github.com/openai/openai-realtime-api-beta.git
