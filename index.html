@@ -1,20 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite + TS</title>
+  <title>Zoom VideoSDK Quickstart</title>
 </head>
 
-<body>
-  <div id="app">
-    <input id="input" placeholder="Open AI Key">
-    <button id="init">Initialize</button>
-    <br />
-    <button id="start" disabled>Record</button>
+<body class="flex flex-1 flex-col h-full min-h-screen relative flex-col">
+  <h1 class="text-3xl font-bold text-center my-4">Zoom VideoSDK Quickstart</h1>
+  <div class="flex flex-row self-center">
+    <button id="start-btn" class="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 w-64 self-center">
+      Join
+    </button>
+    <button id="stop-btn" class="hidden bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4 w-64 self-center">
+      Leave
+    </button>
   </div>
+  <div class="flex flex-row self-center m-2">
+    <button id="toggle-video-btn" class="hidden bg-blue-500 text-white py-2 text-sm px-2 rounded w-48 self-center">
+      Toggle Video
+    </button>
+    <span class="m-2" />
+    <button id="change-watermark-btn" class="hidden bg-blue-500 text-white py-2 text-sm px-2 rounded w-48 self-center">
+      Randomize Watermark
+    </button>
+  </div>
+  <video-player-container></video-player-container>
+  <div class="text-center absolute bottom-2 w-full">
+    Do not expose your SDK Secret to the client, when using this in production
+    please make sure to use a backend service to sign tokens.
+  </div>
+  <script src="/coi-serviceworker.js"></script>
   <script type="module" src="/src/main.ts"></script>
 </body>
 

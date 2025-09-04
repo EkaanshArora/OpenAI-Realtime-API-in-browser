@@ -13,7 +13,11 @@
     "vite": "^5.4.8"
   },
   "dependencies": {
+    "@openai/agents": "^0.1.0",
     "@openai/realtime-api-beta": "git+https://github.com/openai/openai-realtime-api-beta#main",
-    "@zoom/videosdk": "^1.12.5"
+    "@types/jsrsasign": "^10.5.15",
+    "@zoom/videosdk": "^2.2.10",
+    "jsrsasign": "^11.1.0",
+    "zod": "3"
   }
 }
