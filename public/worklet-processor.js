@@ -2,13 +2,13 @@
 class RecorderWorkletProcessor extends AudioProcessor {
   constructor(port, options) {
     super(port, options);
-    port.addEventListener('message', (e) => {
-      if (e.data.cmd === 'update_watermark_image') {
+    port.addEventListener("message", (e) => {
+      if (e.data.cmd === "update_watermark_image") {
         this.watermarkImage = e.data.image;
       }
     });
-
-    this.bufferSize = 11025;
+    this.buffer = [];
+    this.bufferSize = 512;
     this.noiseThreshold = 0.02; // Adjust this threshold as needed
   }
 
@@ -23,8 +23,19 @@ class RecorderWorkletProcessor extends AudioProcessor {
           channelData[i] = 0; // Mute the audio below the threshold
         }
       }
-
-      this.port.postMessage(channelData);
+      // if channelData is all 0, return true
+      if (channelData.every((x) => x === 0)) {
+        return true;
+      } else {
+        // store in a buffer till it is full
+        this.buffer.push(...channelData);
+        // console.log("buffer", this.buffer);
+        if (this.buffer.length >= this.bufferSize) {
+          this.port.postMessage(this.buffer);
+          this.buffer = [];
+          // console.log("channelData", channelData);
+        }
+      }
     }
     return true;
   }
